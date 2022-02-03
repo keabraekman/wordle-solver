@@ -48,19 +48,19 @@ def create_five_letter_words(all_words):
 five_letter_words = pickle.load(open('five_letter_words.pkl', 'rb'))
 
 
-black = ['t','h','i','y','s','v','c']
-yellowLetter = ['e','r','e','r']
-yellowIndex = [2,4,1,3]
-greenLetter = ['a','g','r','e']
-greenIndex = [2,0,1,4]
-
+black = ['e','n','i','a','f','o','h']
+yellowLetter = ['t','r','t']
+yellowIndex = [0,2,3]
+greenLetter = []
+greenIndex = []
+duplicateLetters = False
 
 candidates = five_letter_words[:]
 
 for i in range(len(five_letter_words)):
     a, b, c, d, e = five_letter_words[i][0], five_letter_words[i][1], five_letter_words[i][2], five_letter_words[i][3], five_letter_words[i][4]
     l = [a,b,c,d,e]
-    if (a in [b,c,d,e] or b in [a,c,d,e] or c in [a,b,d,e] or d in [a,b,c,e]) and five_letter_words[i] in candidates:
+    if duplicateLetters or ((a in [b,c,d,e] or b in [a,c,d,e] or c in [a,b,d,e] or d in [a,b,c,e]) and five_letter_words[i] in candidates):
         candidates.remove(five_letter_words[i])    
     for j in range(len(black)):
         if black[j] in l and five_letter_words[i] in candidates:
@@ -77,6 +77,35 @@ for i in range(len(five_letter_words)):
 
 
 print(candidates)
+
+
+
+
+def perfectFirstWord():
+    letters = {}
+    # letters = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w',
+    # 'x','y','z']
+    # numbers = [0]*26
+    for i in range(len(five_letter_words)):
+        for j in range(len(five_letter_words[i])):
+            if five_letter_words[i][j] in letters:
+                letters[five_letter_words[i][j].lower()] += 1
+            else:
+                letters[five_letter_words[i][j].lower()] = 1
+    
+    five_letter_dict = {}
+    for i in range(len(five_letter_words)):
+        a,b,c,d,e = five_letter_words[i][0].lower(),five_letter_words[i][1].lower(),five_letter_words[i][2].lower(),five_letter_words[i][3].lower(),five_letter_words[i][4].lower()
+        if a not in [b,c,d,e] and b not in [a,c,d,e] and c not in [a,b,d,e] and d not in [a,b,c,e] and e not in [a,b,c,d]:
+            five_letter_dict[five_letter_words[i]] = 0
+            for j in range(len(five_letter_words[i])):
+                five_letter_dict[five_letter_words[i]] += letters[five_letter_words[i][j].lower()]
+    
+    print(sorted(five_letter_dict.items(), key=lambda x: x[1], reverse=True))
+
+
+# perfectFirstWord()
+
 
 
 
