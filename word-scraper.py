@@ -48,20 +48,114 @@ def create_five_letter_words(all_words):
 five_letter_words = pickle.load(open('five_letter_words.pkl', 'rb'))
 
 
-black = ['e','n','i','a','f','o','h']
-yellowLetter = ['t','r','t']
-yellowIndex = [0,2,3]
-greenLetter = []
-greenIndex = []
-duplicateLetters = False
-
 candidates = five_letter_words[:]
+
+
+def removeDuplicates(candidates):
+    for i in range(len(five_letter_words)):
+        a, b, c, d, e = five_letter_words[i][0], five_letter_words[i][1], five_letter_words[i][2], five_letter_words[i][3], five_letter_words[i][4]
+        if five_letter_words[i] in candidates:
+            if a in [b,c,d,e] or b in [a,c,d,e] or c in [a,b,d,e] or d in [a,b,c,e]:
+                candidates.remove(five_letter_words[i]) 
+    return candidates
+
+def blacks(candidates, words, numbers):
+    black = []
+    for i in range(len(words)):
+        for j in range(len(words[i])):
+            if numbers[i][j] == 0:
+                black.append(words[i][j])
+
+    for i in range(len(five_letter_words)):  
+        a, b, c, d, e = five_letter_words[i][0], five_letter_words[i][1], five_letter_words[i][2], five_letter_words[i][3], five_letter_words[i][4]    
+        l = [a,b,c,d,e]
+        for j in range(len(black)):
+            if black[j] in l and five_letter_words[i] in candidates:
+                candidates.remove(five_letter_words[i])
+    return candidates
+
+def yellows(candidates, words, numbers):
+    yellowLetters, yellowIndexes = [], []
+    for i in range(len(words)):
+        for j in range(len(words[i])):
+            if numbers[i][j] == 1:
+                yellowLetters.append(words[i][j])
+                yellowIndexes.append(j)
+    # print('YL = ', yellowLetters)
+    # print('YI = ', yellowIndexes)
+    for i in range(len(five_letter_words)):  
+        a, b, c, d, e = five_letter_words[i][0], five_letter_words[i][1], five_letter_words[i][2], five_letter_words[i][3], five_letter_words[i][4]    
+        l = [a,b,c,d,e]
+        for j in range(len(yellowLetters)):
+            if five_letter_words[i] in candidates:
+                if l[yellowIndexes[j]]==yellowLetters[j] or yellowLetters[j] not in l:
+                    candidates.remove(five_letter_words[i])
+    return candidates
+
+def greens(candidates, words, numbers):
+    greenLetters, greenIndexes = [], []
+    for i in range(len(words)):
+        for j in range(len(words[i])):
+            if numbers[i][j] == 2:
+                greenLetters.append(words[i][j])
+                greenIndexes.append(j)
+
+    for i in range(len(five_letter_words)):  
+        a, b, c, d, e = five_letter_words[i][0], five_letter_words[i][1], five_letter_words[i][2], five_letter_words[i][3], five_letter_words[i][4]    
+        l = [a,b,c,d,e]
+        for j in range(len(greenLetters)):
+            if l[greenIndexes[j]] != greenLetters[j] and five_letter_words[i] in candidates:
+                candidates.remove(five_letter_words[i])
+    # print('GL = ', greenLetters)
+    # print('GI = ', greenIndexes)
+    return candidates
+
+
+def bestCandidate(words,numbers):
+    candidates = five_letter_words[:]
+    candidates = removeDuplicates(candidates)
+    candidates = blacks(candidates, words, numbers)
+    candidates = yellows(candidates, words, numbers)
+    candidates = greens(candidates, words, numbers)
+    if len(candidates)<10:
+        candidates = five_letter_words[:]
+        candidates = blacks(candidates, words, numbers)
+        candidates = yellows(candidates, words, numbers)
+        candidates = greens(candidates, words, numbers)
+        return candidates
+    else:
+        return candidates
+
+
+
+print(bestCandidate(['tenia','hydro','pluck'],
+[[1,1,0,0,0],
+[0,0,0,1,0],
+[0,0,0,0,0]
+]))
+
+# print(bestCandidate(['lousy','lowly'],
+# [[2,2,0,0,2],
+# [2,2,0,0,2]
+# ]))
+
+
+
+
+black = ['t','e','n','i','b','c','k','u','g','h','w']
+yellowLetter = ['l','l','s']
+yellowIndex = [0,1,4]
+greenLetter = ['a','l']
+greenIndex = [1,2]
+onlyUniqueLetters = False
+
 
 for i in range(len(five_letter_words)):
     a, b, c, d, e = five_letter_words[i][0], five_letter_words[i][1], five_letter_words[i][2], five_letter_words[i][3], five_letter_words[i][4]
     l = [a,b,c,d,e]
-    if duplicateLetters or ((a in [b,c,d,e] or b in [a,c,d,e] or c in [a,b,d,e] or d in [a,b,c,e]) and five_letter_words[i] in candidates):
-        candidates.remove(five_letter_words[i])    
+    if five_letter_words[i] in candidates:
+        if onlyUniqueLetters and (a in [b,c,d,e] or b in [a,c,d,e] or c in [a,b,d,e] or d in [a,b,c,e]):
+            candidates.remove(five_letter_words[i])    
     for j in range(len(black)):
         if black[j] in l and five_letter_words[i] in candidates:
             candidates.remove(five_letter_words[i])
@@ -75,8 +169,7 @@ for i in range(len(five_letter_words)):
         if l[greenIndex[j]] != greenLetter[j] and five_letter_words[i] in candidates:
             candidates.remove(five_letter_words[i])
 
-
-print(candidates)
+# print(candidates)
 
 
 
@@ -95,8 +188,9 @@ def perfectFirstWord():
     
     five_letter_dict = {}
     for i in range(len(five_letter_words)):
+        remove = ['s','t','a','r','e','f','l','i','c','k']
         a,b,c,d,e = five_letter_words[i][0].lower(),five_letter_words[i][1].lower(),five_letter_words[i][2].lower(),five_letter_words[i][3].lower(),five_letter_words[i][4].lower()
-        if a not in [b,c,d,e] and b not in [a,c,d,e] and c not in [a,b,d,e] and d not in [a,b,c,e] and e not in [a,b,c,d]:
+        if a not in [b,c,d,e]+remove and b not in [a,c,d,e]+remove and c not in [a,b,d,e]+remove and d not in [a,b,c,e]+remove and e not in [a,b,c,d]+remove:
             five_letter_dict[five_letter_words[i]] = 0
             for j in range(len(five_letter_words[i])):
                 five_letter_dict[five_letter_words[i]] += letters[five_letter_words[i][j].lower()]
