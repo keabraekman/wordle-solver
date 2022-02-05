@@ -128,15 +128,13 @@ def bestCandidate(words,numbers):
 
 
 
-print(bestCandidate(['tenia','hydro','pluck'],
-[[1,1,0,0,0],
-[0,0,0,1,0],
-[0,0,0,0,0]
+print(bestCandidate(['tenia','hydro'],
+[[0,1,0,0,0],
+[2,2,0,1,0]
 ]))
 
-# print(bestCandidate(['lousy','lowly'],
-# [[2,2,0,0,2],
-# [2,2,0,0,2]
+# print(bestCandidate(['ogive'],
+# [[1,0,1,0,2]
 # ]))
 
 
