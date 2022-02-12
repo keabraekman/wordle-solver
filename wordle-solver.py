@@ -2,8 +2,8 @@
 import pickle
 
 
-f = open("370k-words.txt", "r")
-all_words = f.read().splitlines()
+f = open("wordle-answers-alphabetical.txt", "r")
+five_letter_words = f.read().splitlines()
 
 # We create a list of only the 5 letter words
 def create_five_letter_words(all_words):
@@ -15,7 +15,7 @@ def create_five_letter_words(all_words):
 
 # five_letter_words = create_five_letter_words(all_words)
 # pickle.dump(five_letter_words, open('five_letter_words.pkl', 'wb'))
-five_letter_words = pickle.load(open('five_letter_words.pkl', 'rb'))
+# five_letter_words = pickle.load(open('five_letter_words.pkl', 'rb'))
 
 for i in range(len(five_letter_words)):
     if five_letter_words.count(five_letter_words[i]) > 1:
@@ -120,45 +120,45 @@ def bestCandidate(words,numbers):
 
 print(bestCandidate(
     [
-        'arose',
-    'outre',
-    'corbe',
-    # 'looby',
+        'alert',
+    'scion',
+    'loamy',
+    # 'leggy',
     # 'cavel'
     ],
 [
-    [0,1,1,0,2],
-[1,0,0,1,2],
-[0,2,2,0,2],
-# [2,2,2,0,2],
+    [1,1,0,0,0],
+[0,0,0,1,0],
+[1,1,1,0,0],
+# [1,2,0,0,2],
 # [0,2,0,2,2]
 ]))
 
 
-# remove = ['a','r','o','s','e','u','n','l','i','t']
-# def perfect_first_word():
-#     letter_dict = dict()
-#     frequency = dict()
-#     for i in range(len(five_letter_words)):
-#         for j in range(len(five_letter_words[i])):
-#             if five_letter_words[i][j] in letter_dict:
-#                 letter_dict[five_letter_words[i][j]] += 1
-#             else:
-#                 letter_dict[five_letter_words[i][j]] = 1
+remove = ['a','l', 'e','r','t','s','c','i','o','n']
+def perfect_first_word():
+    letter_dict = dict()
+    frequency = dict()
+    for i in range(len(five_letter_words)):
+        for j in range(len(five_letter_words[i])):
+            if five_letter_words[i][j] in letter_dict:
+                letter_dict[five_letter_words[i][j]] += 1
+            else:
+                letter_dict[five_letter_words[i][j]] = 1
     
-#     for i in range(len(five_letter_words)):
-#         for j in range(len(five_letter_words[i])):
-#             if five_letter_words[i].count(five_letter_words[i][j]) == 1 and five_letter_words[i][j] not in remove:
-#                 if five_letter_words[i] in frequency and five_letter_words[i].count(five_letter_words[i][j]) == 1:
-#                     frequency[five_letter_words[i]] += letter_dict[five_letter_words[i][j]]
-#                 else:
-#                     frequency[five_letter_words[i]] = letter_dict[five_letter_words[i][j]]
-#             else:
-#                 frequency[five_letter_words[i]] = 0
-#     print(sorted(frequency.items(), key=lambda x: x[1], reverse=True)[:10])
+    for i in range(len(five_letter_words)):
+        for j in range(len(five_letter_words[i])):
+            if five_letter_words[i].count(five_letter_words[i][j]) == 1 and five_letter_words[i][j] not in remove:
+                if five_letter_words[i] in frequency and five_letter_words[i].count(five_letter_words[i][j]) == 1:
+                    frequency[five_letter_words[i]] += letter_dict[five_letter_words[i][j]]
+                else:
+                    frequency[five_letter_words[i]] = letter_dict[five_letter_words[i][j]]
+            else:
+                frequency[five_letter_words[i]] = 0
+    print(sorted(frequency.items(), key=lambda x: x[1], reverse=True)[:10])
 
 # print(perfect_first_word())
 
-# arose
-# unlit
-# lymph
+# alert
+# scion
+# dumpy
