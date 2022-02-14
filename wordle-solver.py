@@ -17,9 +17,6 @@ def create_five_letter_words(all_words):
 # pickle.dump(five_letter_words, open('five_letter_words.pkl', 'wb'))
 # five_letter_words = pickle.load(open('five_letter_words.pkl', 'rb'))
 
-for i in range(len(five_letter_words)):
-    if five_letter_words.count(five_letter_words[i]) > 1:
-        print(five_letter_words[i])
 
 
 # Black letters
@@ -117,25 +114,30 @@ def bestCandidate(words,numbers):
 
     return print(sorted(frequency.items(), key=lambda x: x[1], reverse=True))
 
+# Worst candidates : 
+# Widow
+# Inbox
+# Trunk
 
 print(bestCandidate(
     [
         'alert',
-    'scion',
-    'loamy',
-    # 'leggy',
+    'slunk',
+    # 'payer',
+    # 'cramp',
     # 'cavel'
     ],
 [
-    [1,1,0,0,0],
-[0,0,0,1,0],
-[1,1,1,0,0],
-# [1,2,0,0,2],
+    [0,2,0,0,0],
+[0,2,2,0,2],
+# [1,1,1,1,1],
+# [2,2,2,0,0],
 # [0,2,0,2,2]
 ]))
 
 
-remove = ['a','l', 'e','r','t','s','c','i','o','n']
+remove = ['w','i','d','o','w','i','n','b','o','x']
+# remove = []
 def perfect_first_word():
     letter_dict = dict()
     frequency = dict()
@@ -148,17 +150,32 @@ def perfect_first_word():
     
     for i in range(len(five_letter_words)):
         for j in range(len(five_letter_words[i])):
-            if five_letter_words[i].count(five_letter_words[i][j]) == 1 and five_letter_words[i][j] not in remove:
+            if five_letter_words[i][j] not in five_letter_words[i][j+1:] and five_letter_words[i][j] not in remove:
                 if five_letter_words[i] in frequency and five_letter_words[i].count(five_letter_words[i][j]) == 1:
                     frequency[five_letter_words[i]] += letter_dict[five_letter_words[i][j]]
                 else:
                     frequency[five_letter_words[i]] = letter_dict[five_letter_words[i][j]]
             else:
                 frequency[five_letter_words[i]] = 0
-    print(sorted(frequency.items(), key=lambda x: x[1], reverse=True)[:10])
+    print(sorted(letter_dict.items(), key=lambda x: x[1], reverse=True))
+    print(sorted(frequency.items(), key=lambda x: x[1], reverse=True))
 
 # print(perfect_first_word())
 
 # alert
 # scion
 # dumpy
+
+
+# this function is given a word and returns a list of the numbers that correspond given the answer
+def give_numbers(candidate, answer):
+    numbers = [1]*5
+    for i in range(len(candidate)):
+        if candidate[i] == answer[i]:
+            numbers[i] = 2
+        elif candidate[i] not in answer:
+            numbers[i] = 0
+    return numbers
+
+
+print(give_numbers('alert', 'biome'))
