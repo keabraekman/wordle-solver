@@ -177,6 +177,7 @@ def give_numbers(candidate, answer):
             numbers[i] = 0
     return numbers
 
+
 # print(give_numbers('alert', 'biome'))
 
 def guesses_single_word(answer):
@@ -184,7 +185,6 @@ def guesses_single_word(answer):
         return 1
     words = ['alert']
     numbers = [give_numbers('alert', answer)]
-
     for i in range(5):
         candidate = bestCandidate(words, numbers)[0][0]
         numbers.append(give_numbers(candidate, answer))
@@ -194,7 +194,49 @@ def guesses_single_word(answer):
     return 0
         # print(candidate)
 
+# def guesses_single_word(answer):
+#     if answer == 'alert':
+#         return 1
+#     words = ['alert']
+#     numbers = [give_numbers('alert', answer)]
+#     if answer == 'scion':
+#         return 2
+#     words = ['alert', 'scion']
+#     numbers.append(give_numbers('scion', answer))
+#     if answer == 'dumpy':
+#         return 3
+#     words = ['alert', 'scion', 'dumpy']
+#     numbers.append(give_numbers('dumpy', answer))
+#     for i in range(3):
+#         candidate = bestCandidate(words, numbers)[0][0]
+#         numbers.append(give_numbers(candidate, answer))
+#         words.append(candidate)
+#         if candidate == answer:
+#             return (i+4)
+#     return 0
 
-guesses_single_word('pound')
 
-# print(give_numbers('alert', 'biome'))
+
+# print(guesses_single_word('pearl'))
+
+
+#  Write a function that returns a list of all the number of guesses for each word
+def guesses_numbers():
+    numbers = []
+    for w in five_letter_words:
+        print('adding ', w)
+        numbers.append(guesses_single_word(w))
+    return numbers
+
+
+# all_guesses = guesses_numbers()
+# pickle.dump(all_guesses, open('all_guesses.pkl', 'wb'))
+
+all_guesses = pickle.load(open('all_guesses.pkl', 'rb'))
+
+fail, success = 0, len(all_guesses)
+for i in range(len(all_guesses)):
+    if all_guesses[i] == 0:
+        print(five_letter_words[i])
+        fail += 1
+print('success rate = ', 100 - 100*fail/len(all_guesses), '%')
