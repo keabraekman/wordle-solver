@@ -112,25 +112,25 @@ def bestCandidate(words,numbers):
             else:
                 frequency[candidates[i]] = letter_dict[candidates[i][j]]
 
-    return print(sorted(frequency.items(), key=lambda x: x[1], reverse=True))
+    return sorted(frequency.items(), key=lambda x: x[1], reverse=True)
 
 # Worst candidates : 
 # Widow
 # Inbox
 # Trunk
 
-print(bestCandidate(
+(bestCandidate(
     [
         'alert',
-    'slunk',
-    # 'payer',
+    'abhor',
+    # 'detox',
     # 'cramp',
     # 'cavel'
     ],
 [
-    [0,2,0,0,0],
-[0,2,2,0,2],
-# [1,1,1,1,1],
+    [2,0,0,1,0],
+[2,0,0,1,1],
+# [0,1,2,1,0],
 # [2,2,2,0,0],
 # [0,2,0,2,2]
 ]))
@@ -177,5 +177,24 @@ def give_numbers(candidate, answer):
             numbers[i] = 0
     return numbers
 
+# print(give_numbers('alert', 'biome'))
 
-print(give_numbers('alert', 'biome'))
+def guesses_single_word(answer):
+    if answer == 'alert':
+        return 1
+    words = ['alert']
+    numbers = [give_numbers('alert', answer)]
+
+    for i in range(5):
+        candidate = bestCandidate(words, numbers)[0][0]
+        numbers.append(give_numbers(candidate, answer))
+        words.append(candidate)
+        if candidate == answer:
+            return (i+2)
+    return 0
+        # print(candidate)
+
+
+guesses_single_word('pound')
+
+# print(give_numbers('alert', 'biome'))
