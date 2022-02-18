@@ -22,19 +22,23 @@ def create_five_letter_words(all_words):
 # Black letters
 def blacks(candidates, words, numbers):
     # Start with a list of all the black letters
-    black = []
+    black, yellow, green = [], [], []
     # Cycle through inputted words
     for i in range(len(numbers)):
         for j in range(len(numbers[i])):
             if numbers[i][j] == 0:
                 black.append(words[i][j])
+            if numbers[i][j] == 1:
+                yellow.append(words[i][j])
+            if numbers[i][j] == 2:
+                green.append(words[i][j])
     # Cycle through all the candidates and remove the ones that include the black letters
     # for i in range(len(candidates)):
     i = 0
     while i < len(candidates):
         l = [candidates[i][0], candidates[i][1], candidates[i][2], candidates[i][3], candidates[i][4]]
         for j in range(len(black)):
-            if black[j] in l:
+            if black[j] in l and black[j] not in green and black[j] not in yellow:
                 candidates.pop(i)
                 i -= 1
                 break
@@ -119,19 +123,19 @@ def bestCandidate(words,numbers):
 # Inbox
 # Trunk
 
-(bestCandidate(
+print(bestCandidate(
     [
-        'alert',
-    'abhor',
-    # 'detox',
-    # 'cramp',
-    # 'cavel'
+        'sassy',
+    # 'grace',
+    # 'payer',
+    # 'mower',
+    # 'goner'
     ],
 [
-    [2,0,0,1,0],
-[2,0,0,1,1],
-# [0,1,2,1,0],
-# [2,2,2,0,0],
+    [2,1,0,0,0],
+# [0,1,1,0,1],
+# [0,2,0,2,2],
+# [0,2,1,2,2],
 # [0,2,0,2,2]
 ]))
 
@@ -194,26 +198,26 @@ def guesses_single_word(answer):
     return 0
         # print(candidate)
 
-# def guesses_single_word(answer):
-#     if answer == 'alert':
-#         return 1
-#     words = ['alert']
-#     numbers = [give_numbers('alert', answer)]
-#     if answer == 'scion':
-#         return 2
-#     words = ['alert', 'scion']
-#     numbers.append(give_numbers('scion', answer))
-#     if answer == 'dumpy':
-#         return 3
-#     words = ['alert', 'scion', 'dumpy']
-#     numbers.append(give_numbers('dumpy', answer))
-#     for i in range(3):
-#         candidate = bestCandidate(words, numbers)[0][0]
-#         numbers.append(give_numbers(candidate, answer))
-#         words.append(candidate)
-#         if candidate == answer:
-#             return (i+4)
-#     return 0
+def guesses_single_word(answer):
+    if answer == 'alert':
+        return 1
+    words = ['alert']
+    numbers = [give_numbers('alert', answer)]
+    if answer == 'scion':
+        return 2
+    words = ['alert', 'scion']
+    numbers.append(give_numbers('scion', answer))
+    if answer == 'dumpy':
+        return 3
+    words = ['alert', 'scion', 'dumpy']
+    numbers.append(give_numbers('dumpy', answer))
+    for i in range(3):
+        candidate = bestCandidate(words, numbers)[0][0]
+        numbers.append(give_numbers(candidate, answer))
+        words.append(candidate)
+        if candidate == answer:
+            return (i+4)
+    return 0
 
 
 
