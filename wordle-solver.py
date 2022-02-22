@@ -125,18 +125,18 @@ def bestCandidate(words,numbers):
 
 print(bestCandidate(
     [
-        'sassy',
-    # 'grace',
-    # 'payer',
-    # 'mower',
-    # 'goner'
+        'reist',
+    'algum',
+    'decoy',
+    'plump',
+    'usual'
     ],
 [
-    [2,1,0,0,0],
-# [0,1,1,0,1],
-# [0,2,0,2,2],
-# [0,2,1,2,2],
-# [0,2,0,2,2]
+    [1,0,0,0,0],
+# [1,0,0,0,0],
+# [2,1,0,1,0],
+# [0,1,2,0,0],
+# [0,0,2,0,1]
 ]))
 
 
@@ -239,8 +239,29 @@ def guesses_numbers():
 all_guesses = pickle.load(open('all_guesses.pkl', 'rb'))
 
 fail, success = 0, len(all_guesses)
+hist = [0,0,0,0,0,0,0]
 for i in range(len(all_guesses)):
     if all_guesses[i] == 0:
-        print(five_letter_words[i])
+        all_guesses[i] = 7
+        # print(five_letter_words[i])
         fail += 1
+    if all_guesses[i] == 1:
+        hist[0] += 1
+    if all_guesses[i] == 2:
+        hist[1] += 1
+    if all_guesses[i] == 3:
+        hist[2] += 1
+    if all_guesses[i] == 4:
+        hist[3] += 1
+    if all_guesses[i] == 5:
+        hist[4] += 1
+    if all_guesses[i] == 6:
+        hist[5] += 1
+    if all_guesses[i] == 7:
+        hist[6] += 1
 print('success rate = ', 100 - 100*fail/len(all_guesses), '%')
+
+# print(sum(all_guesses)/len(all_guesses))
+
+
+print(hist)
