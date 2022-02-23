@@ -151,6 +151,8 @@ def guess(words, numbers):
         candidates = temp
     
     guesses = dict()
+    guesses_mean = dict()
+    remainings_dict = dict()
     # print('candidates = ', candidates)
     for g in all_guesses:
         print(g)
@@ -158,18 +160,36 @@ def guess(words, numbers):
         for c in candidates:
             number_of_remaining.append(length_of_remaining(g,c,candidates))
         guesses[g] = statistics.median(number_of_remaining)
-    print(sorted(guesses.items(), key=lambda x: x[1], reverse=True))
-    print(candidates)
+        remainings_dict[g] = number_of_remaining
+        # guesses_mean[g] = statistics.mean(number_of_remaining)
+    
+    # Formatting answer better
+    min_median = guesses[min(guesses, key=guesses.get)]
+    for g in guesses:
+        if guesses[g] == min_median:
+            guesses_mean[g] = statistics.mean(remainings_dict[g])
+            
+    answer = dict()
+    for g in guesses_mean:
+        if g in candidates:
+            answer[g] = guesses_mean[g]
+    
+    print('MEDIAN = ', min_median)
+    
+    print('BEST impossible answers = ', sorted(guesses_mean.items(), key=lambda x: x[1], reverse=True))
+    print('BEST possible answers = ', sorted(answer.items(), key=lambda x: x[1], reverse=True))
+    
+    print('CANDIDATES = ', candidates)
         
 
 guess(['reist',
-'vowel',
-# 'slang',
+'clang',
+# 'filmy',
 # 'wrong'
 ], 
-[[0,1,2,0,2],
-[0,0,0,2,0],
-# [0,0,2,0,1],
+[[0,0,2,0,0],
+[1,2,0,0,0],
+# [2,1,1,0,0],
 # [1,1,0,0,0]
 ])
 
