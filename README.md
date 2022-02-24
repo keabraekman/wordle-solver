@@ -49,3 +49,15 @@ to compute and this compounded average would probably take days or weeks to comp
 The next step is to create a web service that allows users to input their wordle guesses in a 
 web page that would then compute the ideal next guess. Although including such code in a browser 
 is quite tricky...
+
+
+
+PS :
+It is not completely clear whether or not we should value median of possible answers or mean of
+possible answers as a better indicator. 
+Using median, the best word to use is REIST (41 possible answers). 
+Using mean, the best word to use is RAISE (61 possible answers).
+
+The mean of RAISE is 83
+The median of REIST is 43
+
