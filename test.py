@@ -154,8 +154,10 @@ def guess(words, numbers):
     guesses_mean = dict()
     remainings_dict = dict()
     # print('candidates = ', candidates)
+    index = 0
     for g in all_guesses:
-        print(g)
+        print(g, ' : ', int(100*index/len(all_guesses)),'%')
+        index += 1
         number_of_remaining = []
         for c in candidates:
             number_of_remaining.append(length_of_remaining(g,c,candidates))
@@ -179,19 +181,36 @@ def guess(words, numbers):
     print('BEST impossible answers = ', sorted(guesses_mean.items(), key=lambda x: x[1], reverse=True))
     print('BEST possible answers = ', sorted(answer.items(), key=lambda x: x[1], reverse=True))
     
-    print('CANDIDATES = ', candidates)
+    print('CANDIDATES = ', candidates, ' AND length ', len(candidates))
         
 
 guess(['reist',
-# 'clang',
-# 'filmy',
+'alone',
+'bicep',
 # 'wrong'
 ], 
-[[1,1,0,0,1],
-# [1,2,0,0,0],
-# [2,1,1,0,0],
+[[0,1,0,0,0],
+[0,2,2,0,2],
+[2,0,0,1,0],
 # [1,1,0,0,0]
 ])
 
+
+
+
+
+
 # candidates =  ['after', 'alter', 'brute', 'cater', 'crate', 'earth', 'eater', 'enter', 'entry', 'ether', 'extra', 'forte', 'grate', 'hater', 'later', 'other', 'otter', 'outer', 'taker', 'tamer', 'taper', 'there', 'three', 'threw', 'tower', 'trace', 'trade', 'tread', 'trend', 'trope', 'trove', 'truce', 'truer', 'tuber', 'utter', 'voter', 'water', 'wrote']
 # print(length_of_remaining('after', 'wrote', candidates))
+def worst_candidate(guess):
+    answer_length_candidates = dict()
+    for a in all_answers:
+        print(a)
+        candidates = all_answers
+        numbers = give_numbers(guess, a)
+        temp = update_candidates(guess, numbers, candidates)
+        candidates = temp
+        answer_length_candidates[a] = len(candidates)
+    print(sorted(answer_length_candidates.items(), key=lambda x: x[1], reverse=False))
+
+print(worst_candidate('reist'))
