@@ -19,7 +19,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      WORDLE_SOLVER_API_BASE_URL: ${{ vars.WORDLE_SOLVER_API_BASE_URL }}
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+      WORDLE_SOLVER_API_BASE_URL: ${{ vars.WORDLE_SOLVER_API_BASE_URL != '' && vars.WORDLE_SOLVER_API_BASE_URL || 'https://535o6if47wy6xb3cwl7jqdremm0kcodt.lambda-url.us-west-1.on.aws' }}
     steps:
       - name: Check out repo
         uses: actions/checkout@v4
