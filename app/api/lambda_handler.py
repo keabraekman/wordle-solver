@@ -12,12 +12,8 @@ from app.api.service import handle_payload
 from app.solver import ValidationError, validate_payload
 
 
-def _cors_headers() -> dict[str, str]:
-    origin = os.getenv("WORDLE_SOLVER_CORS_ORIGIN", "*")
+def _response_headers() -> dict[str, str]:
     return {
-        "Access-Control-Allow-Origin": origin,
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
         "Content-Type": "application/json",
     }
 
@@ -25,7 +21,7 @@ def _cors_headers() -> dict[str, str]:
 def _json_response(status_code: int, payload: dict[str, Any]) -> dict[str, Any]:
     return {
         "statusCode": int(status_code),
-        "headers": _cors_headers(),
+        "headers": _response_headers(),
         "body": json.dumps(payload),
     }
 
