@@ -1,0 +1,4 @@
+aws_region      = "us-west-2"
+project_name    = "wordle-solver"
+environment     = "dev"
+worker_image_uri = ""

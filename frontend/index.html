@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wordle Solver</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero">
+        <p class="eyebrow">Wordle Solver</p>
+        <h1>Wordle Solver</h1>
+        <p class="subtitle">
+          Enter your guesses and results to get the best next guess.
+        </p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Board</h2>
+          <div class="legend">
+            <span class="legend-chip is-absent">0</span>
+            <span class="legend-label">Absent</span>
+            <span class="legend-chip is-present">1</span>
+            <span class="legend-label">Present</span>
+            <span class="legend-chip is-correct">2</span>
+            <span class="legend-label">Correct</span>
+          </div>
+        </div>
+
+        <p class="helper">
+          Type each 5-letter guess. Then click the result squares under that row
+          to cycle gray, yellow, and green.
+        </p>
+
+        <p id="backend-notice" class="backend-notice" hidden></p>
+
+        <div id="board" class="board" aria-live="polite"></div>
+
+        <div class="actions">
+          <button id="add-row-button" type="button" class="button secondary">
+            Add Row
+          </button>
+          <button id="remove-row-button" type="button" class="button secondary">
+            Remove Row
+          </button>
+          <button id="solve-button" type="button" class="button primary">
+            Submit
+          </button>
+        </div>
+
+        <p id="status-message" class="status-message" aria-live="polite"></p>
+      </section>
+
+      <section id="results-panel" class="panel results-panel" hidden>
+        <div class="panel-header">
+          <h2>Next Guess</h2>
+          <p id="strategy-line" class="strategy-line"></p>
+        </div>
+
+        <div class="result-grid">
+          <article class="result-card result-card-primary">
+            <p class="result-label">Best next guess</p>
+            <div id="best-guess-tiles" class="word-tiles word-tiles-large"></div>
+          </article>
+
+          <article class="result-card">
+            <p class="result-label">Remaining candidate count</p>
+            <p id="remaining-count" class="remaining-count"></p>
+          </article>
+        </div>
+
+        <article class="result-card">
+          <div class="result-card-header">
+            <p class="result-label">Top 10 ranked guesses</p>
+            <p id="ranking-label" class="result-subtle"></p>
+          </div>
+          <ol id="ranked-list" class="ranked-list"></ol>
+        </article>
+
+        <article id="candidates-card" class="result-card" hidden>
+          <div class="result-card-header">
+            <p class="result-label">Remaining candidate words</p>
+            <p class="result-subtle">Shown only when the list is already small.</p>
+          </div>
+          <div id="candidate-list" class="candidate-list"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="./config.js"></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
