@@ -38,7 +38,7 @@ def solve_next_guess(guesses: Sequence[GuessInput]) -> SolveResult:
     candidates = filter_candidates(guesses)
     if not candidates:
         raise ValidationError(
-            "That guess history leaves no valid Wordle answers. Check the words and feedback."
+            "That guess history leaves no valid candidate answers. Check the words and feedback."
         )
 
     remaining_candidates = (

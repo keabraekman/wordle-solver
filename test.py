@@ -1,9 +1,7 @@
 import pickle
 
 all_guesses = pickle.load(open('all_guesses.pkl', 'rb'))
-
-f = open("wordle-answers-alphabetical.txt", "r")
-all_answers = f.read().splitlines()
+all_answers = all_guesses[:]
 
 # print('length of guesses = ', len(all_guesses))
 # print('length of answers = ', len(all_answers))
@@ -15,17 +13,13 @@ all_answers = f.read().splitlines()
 
 
 # Import the list of words
-import pickle
 import statistics
 
 
 # Idea 1 : 
 # Guess the word that reduces the list the most on average
-# Idea 2 : 
-# Use the longer list of words as guesses and the wordle answers for answers
-
-f = open("wordle-answers-alphabetical.txt", "r")
-all_answers = f.read().splitlines()
+# Idea 2 :
+# Use the longer list of words as both guesses and answers
 
 
 def create_all_guesses(all_words):
@@ -186,12 +180,12 @@ def guess(words, numbers):
 
 guess(['reist',
 'alone',
-'bicep',
+'panel',
 # 'wrong'
 ], 
 [[0,1,0,0,0],
-[0,2,2,0,2],
-[2,0,0,1,0],
+[1,1,0,1,1],
+# [2,0,0,1,0],
 # [1,1,0,0,0]
 ])
 

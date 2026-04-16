@@ -14,13 +14,13 @@ def _resource(name: str):
 
 @lru_cache(maxsize=1)
 def load_answer_words() -> tuple[str, ...]:
-    contents = _resource("wordle-answers-alphabetical.txt").read_text(encoding="utf-8")
-    return tuple(word.strip().lower() for word in contents.splitlines() if word.strip())
+    return load_guess_words()
 
 
 @lru_cache(maxsize=1)
 def load_guess_words() -> tuple[str, ...]:
-    return tuple(pickle.loads(_resource("all_guesses.pkl").read_bytes()))
+    raw_words = pickle.loads(_resource("all_guesses.pkl").read_bytes())
+    return tuple(str(word).strip().lower() for word in raw_words if str(word).strip())
 
 
 @lru_cache(maxsize=1)

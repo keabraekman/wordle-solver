@@ -20,8 +20,15 @@ class SolverAdapterTests(unittest.TestCase):
         self.assertEqual(result.remaining_candidate_count, 1)
         self.assertEqual(result.remaining_candidates, ("cigar",))
 
+    def test_solver_treats_guess_only_words_as_valid_answers(self) -> None:
+        result = solve_next_guess([GuessInput(word="cubit", feedback="22222")])
+
+        self.assertEqual(result.best_guess, "cubit")
+        self.assertEqual(result.remaining_candidate_count, 1)
+        self.assertEqual(result.remaining_candidates, ("cubit",))
+
     def test_solver_rejects_impossible_guess_history(self) -> None:
-        with self.assertRaisesRegex(ValidationError, "no valid Wordle answers"):
+        with self.assertRaisesRegex(ValidationError, "no valid candidate answers"):
             solve_next_guess(
                 [
                     GuessInput(word="cigar", feedback="22222"),

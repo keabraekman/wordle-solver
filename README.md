@@ -104,7 +104,7 @@ pyproject.toml
   - every word must be exactly 5 letters
   - every word must exist in the allowed guess list
   - every feedback string must be exactly 5 characters of `0`, `1`, or `2`
-  - if the guess history leaves no valid official Wordle answers, the request is rejected
+  - if the guess history leaves no valid candidate answers, the request is rejected
 
 - Strategy selection:
   - no guesses yet: use the legacy precomputed opening-word ranking
@@ -286,7 +286,7 @@ The Lambda handler also supports:
 
 ## Important Assumptions
 
-- This app uses the official Wordle answer list bundled in the repo.
+- This app treats the full allowed guess list as the candidate answer pool.
 - The worker image bundles the solver data directly instead of pulling it from storage at runtime.
 - The production frontend is a plain S3 website endpoint, which is HTTP-only. If you want HTTPS and a nicer public edge setup, add CloudFront later.
 - ECS tasks run in public subnets with public IPs so the stack can stay NAT-free and cheap.
