@@ -8,7 +8,7 @@ from .legacy_solver2 import (
     rank_candidates_by_expected_remaining,
 )
 from .models import GuessInput, RankedGuess, SolveResult
-from .resources import load_answer_words
+from .resources import load_answer_words, load_valid_guesses
 from .validation import ValidationError
 
 
@@ -59,7 +59,10 @@ def solve_next_guess(guesses: Sequence[GuessInput]) -> SolveResult:
         )
 
     if len(candidates) <= ADVANCED_RANKING_THRESHOLD:
-        ranked = rank_candidates_by_expected_remaining(candidates)[:10]
+        ranked = rank_candidates_by_expected_remaining(
+            candidates,
+            guess_pool=load_valid_guesses(),
+        )[:10]
         top_guesses = tuple(
             RankedGuess(
                 word=str(item["word"]),
@@ -77,7 +80,10 @@ def solve_next_guess(guesses: Sequence[GuessInput]) -> SolveResult:
             ranking_label="median remaining candidates",
         )
 
-    ranked = rank_candidates_by_frequency(candidates)[:10]
+    ranked = rank_candidates_by_frequency(
+        candidates,
+        guess_pool=load_valid_guesses(),
+    )[:10]
     top_guesses = tuple(RankedGuess(word=word, score=score) for word, score in ranked)
     return SolveResult(
         best_guess=top_guesses[0].word,

@@ -4,7 +4,7 @@ import re
 from typing import Any
 
 from .models import GuessInput
-from .resources import load_guess_word_set
+from .resources import load_valid_guess_set
 
 
 WORD_PATTERN = re.compile(r"^[a-zA-Z]{5}$")
@@ -25,7 +25,7 @@ def validate_payload(payload: Any) -> list[GuessInput]:
     if not isinstance(raw_guesses, list):
         raise ValidationError("'guesses' must be a list.")
 
-    allowed_guesses = load_guess_word_set()
+    allowed_guesses = load_valid_guess_set()
     guesses: list[GuessInput] = []
 
     for index, raw_guess in enumerate(raw_guesses):

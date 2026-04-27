@@ -37,19 +37,25 @@ def filter_candidates(
     guesses: Sequence[GuessInput],
     candidates: Iterable[str] | None = None,
 ) -> list[str]:
-    remaining = list(candidates or load_answer_words())
+    remaining = list(load_answer_words() if candidates is None else candidates)
     for guess in guesses:
-        remaining = [candidate for candidate in remaining if candidate_matches(guess, candidate)]
+        remaining = [
+            candidate for candidate in remaining if candidate_matches(guess, candidate)
+        ]
     return remaining
 
 
-def rank_candidates_by_frequency(candidates: Sequence[str]) -> list[tuple[str, int]]:
+def rank_candidates_by_frequency(
+    candidates: Sequence[str],
+    guess_pool: Iterable[str] | None = None,
+) -> list[tuple[str, int]]:
     letter_counts: Counter[str] = Counter()
     for candidate in candidates:
         letter_counts.update(candidate)
 
+    guesses = list(candidates if guess_pool is None else guess_pool)
     ranked: list[tuple[str, int]] = []
-    for candidate in candidates:
+    for candidate in guesses:
         score = 0
         seen_letters: set[str] = set()
         for letter in candidate:

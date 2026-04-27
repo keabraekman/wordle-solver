@@ -1,5 +1,6 @@
 import unittest
 
+from app.solver.models import GuessInput
 from app.solver.validation import ValidationError, validate_payload
 
 
@@ -10,6 +11,12 @@ class ValidationTests(unittest.TestCase):
     def test_validate_payload_rejects_bad_feedback_length(self) -> None:
         with self.assertRaisesRegex(ValidationError, "feedback"):
             validate_payload({"guesses": [{"word": "raise", "feedback": "012"}]})
+
+    def test_validate_payload_accepts_allowed_only_guess(self) -> None:
+        self.assertEqual(
+            validate_payload({"guesses": [{"word": "adieu", "feedback": "00000"}]}),
+            [GuessInput(word="adieu", feedback="00000")],
+        )
 
     def test_validate_payload_rejects_unknown_word(self) -> None:
         with self.assertRaisesRegex(ValidationError, "allowed guess list"):

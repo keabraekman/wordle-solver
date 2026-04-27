@@ -72,6 +72,8 @@ app/
     resources.py
     validation.py
     data/
+      answers.txt
+      allowed_guesses.txt
   worker/
     main.py
 frontend/
@@ -102,9 +104,13 @@ pyproject.toml
 
 - Validation rules:
   - every word must be exactly 5 letters
-  - every word must exist in the allowed guess list
+  - every word must exist in the valid guess list
   - every feedback string must be exactly 5 characters of `0`, `1`, or `2`
   - if the guess history leaves no valid candidate answers, the request is rejected
+- Word lists:
+  - `app/solver/data/answers.txt` contains possible answers from cfreshman's Wordle answers gist
+  - `app/solver/data/allowed_guesses.txt` contains allowed-only guesses from cfreshman's allowed guesses gist
+  - the solver validates and ranks guesses with `answers` union `allowed_guesses`, but filters candidate solutions from `answers.txt` only
 
 - Strategy selection:
   - no guesses yet: use the legacy precomputed opening-word ranking

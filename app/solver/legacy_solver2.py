@@ -4,12 +4,20 @@ from statistics import mean, median
 from typing import Sequence
 
 from .legacy_solver1 import wordle_feedback
-from .resources import load_first_word_rankings
+from .resources import load_first_word_rankings, load_valid_guess_set
 
 
 def precomputed_opening_rankings(limit: int = 10) -> list[dict[str, float | str]]:
     rankings = load_first_word_rankings("median")
-    ordered = sorted(rankings.items(), key=lambda item: (item[1], item[0]))
+    valid_guesses = load_valid_guess_set()
+    ordered = sorted(
+        (
+            (word, score)
+            for word, score in rankings.items()
+            if word in valid_guesses
+        ),
+        key=lambda item: (item[1], item[0]),
+    )
     return [
         {"word": word, "median_remaining": float(score)}
         for word, score in ordered[:limit]
